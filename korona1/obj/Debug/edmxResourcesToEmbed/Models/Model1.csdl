@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KronaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="P_id" />
+    </Key>
+    <Property Name="P_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="place_user" Relationship="Self.FK_place_user_Place" FromRole="Place" ToRole="place_user" />
+  </EntityType>
+  <EntityType Name="place_user">
+    <Key>
+      <PropertyRef Name="placeID" />
+      <PropertyRef Name="UuserID" />
+    </Key>
+    <Property Name="placeID" Type="Int32" Nullable="false" />
+    <Property Name="UuserID" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Place" Relationship="Self.FK_place_user_Place" FromRole="place_user" ToRole="Place" />
+    <NavigationProperty Name="User" Relationship="Self.FK_place_user_User" FromRole="place_user" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="U_id" />
+    </Key>
+    <Property Name="U_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="place_user" Relationship="Self.FK_place_user_User" FromRole="User" ToRole="place_user" />
+  </EntityType>
+  <Association Name="FK_place_user_Place">
+    <End Role="Place" Type="Self.Place" Multiplicity="1" />
+    <End Role="place_user" Type="Self.place_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="P_id" />
+      </Principal>
+      <Dependent Role="place_user">
+        <PropertyRef Name="placeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_place_user_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="place_user" Type="Self.place_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="U_id" />
+      </Principal>
+      <Dependent Role="place_user">
+        <PropertyRef Name="UuserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KronaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Places" EntityType="Self.Place" />
+    <EntitySet Name="place_user" EntityType="Self.place_user" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_place_user_Place" Association="Self.FK_place_user_Place">
+      <End Role="Place" EntitySet="Places" />
+      <End Role="place_user" EntitySet="place_user" />
+    </AssociationSet>
+    <AssociationSet Name="FK_place_user_User" Association="Self.FK_place_user_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="place_user" EntitySet="place_user" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

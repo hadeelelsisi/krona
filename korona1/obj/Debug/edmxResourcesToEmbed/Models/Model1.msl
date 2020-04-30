@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KronaModelStoreContainer" CdmEntityContainer="KronaEntities">
+    <EntitySetMapping Name="Places">
+      <EntityTypeMapping TypeName="KronaModel.Place">
+        <MappingFragment StoreEntitySet="Place">
+          <ScalarProperty Name="P_id" ColumnName="P_id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="place_user">
+      <EntityTypeMapping TypeName="KronaModel.place_user">
+        <MappingFragment StoreEntitySet="place-user">
+          <ScalarProperty Name="placeID" ColumnName="placeID" />
+          <ScalarProperty Name="UuserID" ColumnName="UuserID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="KronaModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="U_id" ColumnName="U_id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

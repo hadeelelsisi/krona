@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KronaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="P_id" />
+    </Key>
+    <Property Name="P_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="place-user">
+    <Key>
+      <PropertyRef Name="placeID" />
+      <PropertyRef Name="UuserID" />
+    </Key>
+    <Property Name="placeID" Type="int" Nullable="false" />
+    <Property Name="UuserID" Type="int" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="U_id" />
+    </Key>
+    <Property Name="U_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_place-user_Place">
+    <End Role="Place" Type="Self.Place" Multiplicity="1" />
+    <End Role="place-user" Type="Self.place-user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="P_id" />
+      </Principal>
+      <Dependent Role="place-user">
+        <PropertyRef Name="placeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_place-user_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="place-user" Type="Self.place-user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="U_id" />
+      </Principal>
+      <Dependent Role="place-user">
+        <PropertyRef Name="UuserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KronaModelStoreContainer">
+    <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="place-user" EntityType="Self.place-user" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_place-user_Place" Association="Self.FK_place-user_Place">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="place-user" EntitySet="place-user" />
+    </AssociationSet>
+    <AssociationSet Name="FK_place-user_User" Association="Self.FK_place-user_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="place-user" EntitySet="place-user" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
